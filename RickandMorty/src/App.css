@@ -1,0 +1,107 @@
+.back {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(black, rgb(1, 1, 34));
+}
+
+.star {
+  position: fixed;
+  background-color: white;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+.starAnimated {
+  position: fixed;
+  background-color: white;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  animation-name: twinkle;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+.star1 {
+  margin-top: 15%;
+  margin-left: 60%;
+}
+
+.star2 {
+  margin-top: 23%;
+  margin-left: 65%;
+}
+
+.star3 {
+  margin-top: 42%;
+  margin-left: 70%;
+}
+
+.star4 {
+  margin-top: 5%;
+  margin-left: 10%;
+}
+.star5 {
+  margin-top: 50%;
+  margin-left: 15%;
+}
+.star6 {
+  margin-top: 24%;
+  margin-left: 5%;
+}
+
+.star7 {
+  margin-top: 30%;
+  margin-left: 20%;
+}
+
+.star8 {
+  margin-top: 35%;
+  margin-left: 35%;
+}
+
+.star9 {
+  margin-top: 25%;
+  margin-left: 45%;
+}
+.star10 {
+  margin-top: 10%;
+  margin-left: 65%;
+}
+.star11 {
+  margin-top: 33%;
+  margin-left: 87%;
+}
+.star12 {
+  margin-top: 10%;
+  margin-left: 93%;
+}
+.star12 {
+  margin-top: 10%;
+  margin-left: 33%;
+}
+.star13 {
+  margin-top: 10%;
+  margin-left: 83%;
+}
+.star14 {
+  margin-top: 20%;
+  margin-left: 93%;
+}
+.star15 {
+  margin-top: 40%;
+  margin-left: 53%;
+}
+.star16 {
+  margin-top: 17%;
+  margin-left: 43%;
+}
+
+@keyframes twinkle {
+  30% {
+    transform: scale(0.3);
+    opacity: 0.6;
+    transform: translate(-3px);
+  }
+}
