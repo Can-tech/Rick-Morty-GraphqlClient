@@ -1,0 +1,20 @@
+{
+  "name": "rickandmorty",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000R\u0000i\u0000c\u0000k\u0000-\u0000M\u0000o\u0000r\u0000t\u0000y\u0000-\u0000G\u0000r\u0000a\u0000p\u0000h\u0000q\u0000l\u0000C\u0000l\u0000i\u0000e\u0000n\u0000t\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Can-tech/Rick-Morty-GraphqlClient.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Can-tech/Rick-Morty-GraphqlClient/issues"
+  },
+  "homepage": "https://github.com/Can-tech/Rick-Morty-GraphqlClient#readme"
+}

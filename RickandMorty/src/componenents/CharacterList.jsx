@@ -1,22 +1,88 @@
 import { Card, Grid, Row, Text } from "@nextui-org/react";
 import { useQuery } from "@apollo/client";
 
-import { GET_CHARACTRERS } from "../Queries/gettheCharcter";
+import { GET_CHARACTERS } from "../Queries/getTheCharacter";
+import { useEffect, useState, useRef } from "react";
 
 export default function CharacterList() {
-  const { loading, error, data } = useQuery(GET_CHARACTRERS);
+  const {
+    loading: data_loading,
+    error,
+    data,
+    fetchMore,
+    variables,
+  } = useQuery(GET_CHARACTERS, {
+    variables: { page: 1 },
+  });
+  const [isElementVisible, setIsElementVisible] = useState();
+  const myRef = useRef();
 
-  if (loading) return <p>Loading...</p>;
+  // useEffect(() => {
+  //   console.log(myRef.current);
+  // });
+  useEffect(() => {
+    myRef.current =
+      document.querySelectorAll(".cardBox")[
+        document.querySelectorAll(".cardBox").length - 1
+      ];
+    if (myRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          setIsElementVisible(entry.isIntersecting);
+        },
+        { threshold: 1 }
+      );
+
+      observer.observe(myRef.current);
+
+      return () => {
+        observer.unobserve(myRef.current);
+      };
+    }
+  });
+
+  console.log(data.characters.info.next);
+  console.log(isElementVisible);
+
+  // useEffect(() => {
+  //   const observerOptions = {
+  //     root: null,
+  //     rootMargin: "0px",
+  //     threshold: 1.0,
+  //   };
+
+  //   const observerCallback = (entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         console.log("Intersection detected!");
+  //       }
+  //     });
+  //   };
+
+  //   const observer = new IntersectionObserver(
+  //     observerCallback,
+  //     observerOptions
+  //   );
+
+  //   const target = document?.querySelector(".cardBox:last-child");
+  //   observer.observe(target);
+  // }, [loading]);
+
+  if (data_loading) {
+    return <p>Loading...</p>;
+  }
   if (error) return <p>Error : {error.message}</p>;
-  console.log(data);
   return (
     <Grid.Container
       gap={2}
       justify="flex-start"
       css={{
-        height: "100vh",
-        overflow: "scroll",
+        height: "100%",
       }}
+      className="scrollingbox"
+      id="cardGrid"
+      ref={myRef}
     >
       {data.characters.results.map((item, index) => (
         <Grid xs={6} sm={3} key={index}>
