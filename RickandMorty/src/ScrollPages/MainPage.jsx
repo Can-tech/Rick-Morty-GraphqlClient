@@ -1,23 +1,4 @@
 import {
-  Animator,
-  ScrollContainer,
-  ScrollPage,
-  batch,
-  Fade,
-  FadeIn,
-  FadeOut,
-  Move,
-  MoveIn,
-  MoveOut,
-  Sticky,
-  StickyIn,
-  StickyOut,
-  Zoom,
-  ZoomIn,
-  ZoomOut,
-} from "react-scroll-motion";
-
-import {
   Container,
   Card,
   Row,
@@ -31,8 +12,17 @@ import {
 
 import CharacterList from "../componenents/CharacterList";
 import searchImage from "../assets/search.png";
+import { useState } from "react";
 
 const MainPage = () => {
+  const [filter, setFilter] = useState([[], [], []]);
+  const handleCheckboxChange = (groupIndex, values) => {
+    setFilter((prevFilter) => {
+      const newFilter = [...prevFilter];
+      newFilter[groupIndex] = values;
+      return newFilter;
+    });
+  };
   return (
     <div
       style={{
@@ -104,7 +94,6 @@ const MainPage = () => {
             <Row>
               <Text
                 h1
-                size={60}
                 css={{
                   textGradient: "45deg, $blue600 -20%, $pink600 50%",
                   marginTop: "-0.3em",
@@ -134,19 +123,20 @@ const MainPage = () => {
                   }}
                 >
                   <Checkbox.Group
-                    defaultValue={["buenos-aires"]}
-                    label="Select Gender"
+                    value={filter[0]}
+                    onChange={(values) => handleCheckboxChange(0, values)}
+                    label="Select a Gender"
                     labelColor="secondary"
                     color="gradient"
                     css={{ margin: "1em", color: "white" }}
                   >
-                    <Checkbox value="buenos-aires">
+                    <Checkbox value="Male">
                       <p style={{ color: "white" }}>Male</p>
                     </Checkbox>
-                    <Checkbox value="sydney">
+                    <Checkbox value="Female">
                       <p style={{ color: "white" }}>Female</p>
                     </Checkbox>
-                    <Checkbox value="london">
+                    <Checkbox value="Unknown">
                       <p style={{ color: "white" }}>Unknown</p>
                     </Checkbox>
                   </Checkbox.Group>
@@ -207,7 +197,7 @@ const MainPage = () => {
           {/* ---CARDS--- */}
           <Col span={9} style={{ height: "100%" }}>
             <div className="mainFrameForTheCharactersList">
-              <CharacterList />
+              <CharacterList filter={filter} />
             </div>
           </Col>
         </Row>

@@ -1,31 +1,22 @@
 import { Card, Grid, Row, Text } from "@nextui-org/react";
 import { useQuery } from "@apollo/client";
-
 import { GET_CHARACTERS } from "../Queries/getTheCharacter";
 import { useEffect, useState, useRef } from "react";
 
-export default function CharacterList() {
-  const {
-    loading: data_loading,
-    error,
-    data,
-    fetchMore,
-    variables,
-  } = useQuery(GET_CHARACTERS, {
-    variables: { page: 1 },
+export default function CharacterList({ filter }) {
+  const [page, setPage] = useState(1);
+  const { loading, error, data, fetchMore } = useQuery(GET_CHARACTERS, {
+    variables: { page },
   });
   const [isElementVisible, setIsElementVisible] = useState();
   const myRef = useRef();
 
-  // useEffect(() => {
-  //   console.log(myRef.current);
-  // });
   useEffect(() => {
     myRef.current =
       document.querySelectorAll(".cardBox")[
         document.querySelectorAll(".cardBox").length - 1
       ];
-    if (myRef.current) {
+    if (data && data.characters) {
       const observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
@@ -40,10 +31,30 @@ export default function CharacterList() {
         observer.unobserve(myRef.current);
       };
     }
-  });
+  }, [data]);
 
-  console.log(data.characters.info.next);
-  console.log(isElementVisible);
+  useEffect(() => {
+    if (isElementVisible) {
+      fetchMore({
+        variables: { page: data.characters.info.next },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!fetchMoreResult) return prev;
+
+          return {
+            characters: {
+              ...fetchMoreResult.characters,
+              results: [
+                ...prev.characters.results,
+                ...fetchMoreResult.characters.results,
+              ],
+            },
+          };
+        },
+      });
+    }
+  }, [isElementVisible]);
+
+  console.log(data?.characters?.info?.next);
 
   // useEffect(() => {
   //   const observerOptions = {
@@ -69,9 +80,7 @@ export default function CharacterList() {
   //   observer.observe(target);
   // }, [loading]);
 
-  if (data_loading) {
-    return <p>Loading...</p>;
-  }
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
   return (
     <Grid.Container
@@ -82,7 +91,6 @@ export default function CharacterList() {
       }}
       className="scrollingbox"
       id="cardGrid"
-      ref={myRef}
     >
       {data.characters.results.map((item, index) => (
         <Grid xs={6} sm={3} key={index}>
