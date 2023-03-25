@@ -10,12 +10,14 @@ export default function CharacterList({ filter }) {
   });
   const [isElementVisible, setIsElementVisible] = useState();
   const myRef = useRef();
+  let filteredData;
 
   useEffect(() => {
     myRef.current =
       document.querySelectorAll(".cardBox")[
         document.querySelectorAll(".cardBox").length - 1
       ];
+    console.log(myRef?.current);
     if (data && data.characters) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -31,7 +33,7 @@ export default function CharacterList({ filter }) {
         observer.unobserve(myRef.current);
       };
     }
-  }, [data]);
+  }, [data, filteredData]);
 
   useEffect(() => {
     if (isElementVisible) {
@@ -82,6 +84,22 @@ export default function CharacterList({ filter }) {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
+  filteredData = data.characters.results;
+  if (filter[0].length > 0) {
+    filteredData = filteredData.filter((element) => {
+      return filter[0].includes(element.gender);
+    });
+  }
+  if (filter[1].length > 0) {
+    filteredData = filteredData.filter((element) =>
+      filter[1].includes(element.species)
+    );
+  }
+  if (filter[2].length > 0) {
+    filteredData = filteredData.filter((element) =>
+      filter[2].includes(element.status)
+    );
+  }
   return (
     <Grid.Container
       gap={2}
@@ -92,7 +110,7 @@ export default function CharacterList({ filter }) {
       className="scrollingbox"
       id="cardGrid"
     >
-      {data.characters.results.map((item, index) => (
+      {filteredData.map((item, index) => (
         <Grid xs={6} sm={3} key={index}>
           <Card
             isHoverable

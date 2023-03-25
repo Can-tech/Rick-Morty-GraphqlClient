@@ -82,6 +82,7 @@ const MainPage = () => {
               width="60%"
               contentLeft={<Image src={searchImage} />}
               contentLeftStyling={true}
+              aria-label={"input"}
             />
           </Col>
         </Row>
