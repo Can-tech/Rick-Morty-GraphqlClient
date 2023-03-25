@@ -16,7 +16,7 @@ export default function CharacterList({ filter }) {
     myRef.current =
       document.querySelectorAll(".cardBox")[
         document.querySelectorAll(".cardBox").length - 1
-      ];
+      ] || document.querySelector("#cardGrid");
     console.log(myRef?.current);
     if (data && data.characters) {
       const observer = new IntersectionObserver(
@@ -33,7 +33,7 @@ export default function CharacterList({ filter }) {
         observer.unobserve(myRef.current);
       };
     }
-  }, [data, filteredData]);
+  });
 
   useEffect(() => {
     if (isElementVisible) {
@@ -57,30 +57,6 @@ export default function CharacterList({ filter }) {
   }, [isElementVisible]);
 
   console.log(data?.characters?.info?.next);
-
-  // useEffect(() => {
-  //   const observerOptions = {
-  //     root: null,
-  //     rootMargin: "0px",
-  //     threshold: 1.0,
-  //   };
-
-  //   const observerCallback = (entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.isIntersecting) {
-  //         console.log("Intersection detected!");
-  //       }
-  //     });
-  //   };
-
-  //   const observer = new IntersectionObserver(
-  //     observerCallback,
-  //     observerOptions
-  //   );
-
-  //   const target = document?.querySelector(".cardBox:last-child");
-  //   observer.observe(target);
-  // }, [loading]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;

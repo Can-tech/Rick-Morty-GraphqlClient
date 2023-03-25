@@ -241,3 +241,19 @@ button:focus-visible {
   scrollbar-width: none;
   overflow: auto;
 }
+
+.up-down-animation {
+  animation-name: up-down;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}

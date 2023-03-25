@@ -13,6 +13,7 @@ import {
 import CharacterList from "../componenents/CharacterList";
 import searchImage from "../assets/search.png";
 import { useState } from "react";
+import ScrollToMore from "../componenents/ScrollToMore";
 
 const MainPage = () => {
   const [filter, setFilter] = useState([[], [], []]);
@@ -199,6 +200,7 @@ const MainPage = () => {
           <Col span={9} style={{ height: "100%" }}>
             <div className="mainFrameForTheCharactersList">
               <CharacterList filter={filter} />
+              {/* <ScrollToMore /> */}
             </div>
           </Col>
         </Row>
